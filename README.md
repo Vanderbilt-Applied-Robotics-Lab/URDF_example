@@ -13,7 +13,7 @@ colcon build
 cd ~/workspace/examples_ws/
 ```
 ```bash
-cd source install/setup.bash
+source install/setup.bash
 ```
 ```bash
 ros2 launch scara_urdf_example scara.launch.py
