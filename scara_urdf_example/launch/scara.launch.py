@@ -1,3 +1,6 @@
+# Launch file for URDF example
+# Applied Robotics
+
 from launch import LaunchDescription
 from launch.substitutions import Command, PathJoinSubstitution
 from launch_ros.actions import Node
@@ -5,18 +8,16 @@ from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
+
+    # get the path of the URDF file
     urdf_path = PathJoinSubstitution([
         FindPackageShare("scara_urdf_example"),
         "urdf",
         "scara.xacro"
     ])
-    robot_description_content = ParameterValue(Command(['xacro ', urdf_path]), value_type=str)
 
-    rviz_config_path = PathJoinSubstitution([
-        FindPackageShare("scara_urdf_example"),
-        "rviz",
-        "scara.rviz"
-    ])
+    # Substitute XACRO macros
+    robot_description_content = ParameterValue(Command(['xacro ', urdf_path]), value_type=str)
 
     return LaunchDescription([
         Node(
@@ -38,8 +39,7 @@ def generate_launch_description():
             package="rviz2",
             executable="rviz2",
             name="rviz2",
-            output="screen",
-            arguments=["-d", rviz_config_path]
+            output="screen"
         ),
 
     ])
